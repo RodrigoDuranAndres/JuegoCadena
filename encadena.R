@@ -8,33 +8,29 @@
 # --------------------------------------
 
 # Precarga de las librarias necesarias
-source("./utils.R")
-
-# Para tests
-set.seed(123)
-
-# palabra primera ultima len
-
-# Inicio del Programa
-## Precarga de valores.s
 load("./datos/diccionario.rda")
 
-es_silaba_ganadora <- function(silabas, primera){
-    is.null(silabas[[primera]])
-}
 
-silabas = unlist(table(diccionario$primera))
+silabas = names(unlist(table(diccionario$primera))) # Saca todas las silabas por las que empieza una palabra
+
 palabras_totales = nrow(diccionario)
 ultima_palabra = diccionario[sample(palabras_totales, 1), ] # devuelve una palabra aleatoria 
 
 palabras_usadas = c(ultima_palabra$palabra)
 
-while (!es_silaba_ganadora(silabas, ultima_palabra$ultima)){
-    posibles_palabras = diccionario[which(diccionario$primera == ultima_palabra$ultima),]
-    posibles_palabras = posibles_palabras[which(!(posibles_palabras$palabra %in% palabras_usadas)),]
-    ultima_palabra = posibles_palabras[sample(nrow(posibles_palabras), 1), ]
-    palabras_usadas = append(palabas_usadas, ultima_palabra['palabra'])
-    print(ultima_palabra$palabra)
+
+#print(ultima_palabra$palabra)
+while (is.element(ultima_palabra$ultima, silabas)){
+
+  posibles_palabras = diccionario[which(diccionario$primera == ultima_palabra$ultima), ]
+  posibles_palabras = posibles_palabras[which(!(posibles_palabras$palabra %in% palabras_usadas)), ]
+    
+  posibles = nrow(posibles_palabras)
+  ultima_palabra = posibles_palabras[sample(posibles, 1), ]
+  
+  palabras_usadas = append(palabras_usadas, ultima_palabra['palabra'])
+  
+  print(ultima_palabra$palabra)
 }
 
 
