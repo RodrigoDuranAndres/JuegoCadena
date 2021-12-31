@@ -14,7 +14,6 @@ if (!require("dplyr")) {install.packages('dplyr')}
 library(dplyr)
 library(sylly)
 
-# install.sylly.lang("es")
 if (!require("sylly.es")) {install.sylly.lang("es")}
 library(sylly.es)
 
@@ -53,7 +52,6 @@ while (TRUE){
           print(sprintf("La palabra empieza por una silaba incorrecta. Debe ser %s", ultima_silaba))
           intentos = intentos + 1
         }
-        
       }else{
         print("La palabra usada no esta en el diccionario")
         intentos = intentos + 1

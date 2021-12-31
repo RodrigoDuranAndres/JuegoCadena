@@ -35,9 +35,11 @@ while (is.element(ultima_palabra$ultima, silabas)){
   
   posibles_ranking = posibles_palabras[order(posibles_palabras$con), ]
   ultima_palabra = posibles_ranking[nrow(posibles_ranking), ]
-  print(posibles_ranking)
+  print(ultima_palabra$ultima)
   
   palabras_usadas = append(palabras_usadas, ultima_palabra$palabra)
   
   print(ultima_palabra$palabra)
 }
+
+# TODO Imprimir la cadena de manera más bonita.
