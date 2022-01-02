@@ -42,4 +42,5 @@ while (is.element(ultima_palabra$ultima, silabas)){
   print(ultima_palabra$palabra)
 }
 
-# TODO Imprimir la cadena de manera más bonita.
+print("[JUEGO] La Cadena Resultante del Juego es:")
+imprimir_cadena(palabras_usadas, max_per_row=3)

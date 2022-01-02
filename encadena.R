@@ -1,4 +1,4 @@
-#!/usr/bin/env Rscript --vanilla
+#!Rscript.exe --vanilla
 
 # -------------------------------------
 # Autores: Grupo 2
@@ -9,7 +9,9 @@
 
 # Precarga de las librarias necesarias
 load("./datos/diccionario.rda")
+source('./utils.R')
 
+set.seed(1234)
 
 silabas = names(unlist(table(diccionario$primera))) # Saca todas las silabas por las que empieza una palabra
 
@@ -33,4 +35,5 @@ while (is.element(ultima_palabra$ultima, silabas)){
   print(ultima_palabra$palabra)
 }
 
-
+print("[JUEGO] La Cadena Resultante del Juego es:")
+imprimir_cadena(palabras_usadas, max_per_row=3)

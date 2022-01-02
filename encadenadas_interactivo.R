@@ -101,3 +101,6 @@ while (TRUE){
   }
     print(sprintf("[NOTIFICACIÓN] Siguiente Silaba: %s", ultima_silaba))
 }
+
+print("[JUEGO] La Cadena Resultante del Juego es:")
+imprimir_cadena(palabras_usadas, max_per_row=3)
