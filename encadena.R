@@ -1,4 +1,4 @@
-#!Rscript.exe --vanilla
+#!R.exe --interactive
 
 # -------------------------------------
 # Autores: Grupo 2
@@ -8,7 +8,7 @@
 # --------------------------------------
 
 # Precarga de las librarias necesarias
-load("./datos/diccionario.rda")
+load("./datos/diccionario_util.rda")
 source('./utils.R')
 
 set.seed(1234)
@@ -32,8 +32,8 @@ while (is.element(ultima_palabra$ultima, silabas)){
   
   palabras_usadas = append(palabras_usadas, ultima_palabra['palabra'])
   
-  print(ultima_palabra$palabra)
+  cat(ultima_palabra$palabra)
 }
 
-print("[JUEGO] La Cadena Resultante del Juego es:")
+cat("[JUEGO] La Cadena Resultante del Juego es:")
 imprimir_cadena(palabras_usadas, max_per_row=3)

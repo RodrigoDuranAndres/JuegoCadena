@@ -14,11 +14,11 @@ R --version // Ver versión de R instalada.
 ```
 Para utilizar el programa y jugar al juego, se debe ejecutar el siguiente comando en la terminal de CMD.
 ``` 
-RScript --vanilla encadena.R
+R.exe --interacive encadena.R
 ```
 Si se usa una terminal unix o powershell, se puede ejecutar como:
 ```
-./encadena.R
+R encadena.R
 ```
 ## Programas Disponibles.
 ---

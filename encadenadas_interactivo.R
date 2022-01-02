@@ -1,4 +1,4 @@
-#!/usr/bin/env Rscript --vanilla
+#!R.exe --interactive
 
 # -------------------------------------
 # Autores: Grupo 2
@@ -8,23 +8,43 @@
 # --------------------------------------
 
 # Precarga de las librarias necesarias
+if(!interactive()){
+    cat("\n[ERROR] the application should be run interactively\n")
+    q()   
+}
+
+
 if (!require("sylly")) {install.packages('sylly')}
 if (!require("dplyr")) {install.packages('dplyr')}
 
-library(dplyr)
-library(sylly)
+suppressMessages(library(dplyr))
+suppressMessages(library(sylly))
 
 if (!require("sylly.es")) {install.sylly.lang("es")}
-library(sylly.es)
+suppressMessages(library(sylly.es))
 
 source("./utils.R")
-load("./datos/diccionario.rda")
+load("./datos/diccionario_util.rda")
+
+
+# Configuración IA
+## TODO Pedir al jugador el nivel de difilcultad
+# Dificultad 1-10
+# Cada nivel de difilcultad, da un 10% de que la IA coga la mejor palabra.
+
+dificultad = as.integer(readline("[JUEGO] Decida el Nivel de Dificultad (1-10): "))
+if (dificultad > 11 || dificultad < 1){
+    dificultad = 5
+}
 
 silabas = names(unlist(table(diccionario$primera)))
 es_silaba_ganadora <- function(silabas, primera){
   is.element(primera, silabas)
 }
 
+# Probabilidades de la IA
+prob_buena = 0.075 * dificultad
+print(prob_buena)
 
 # Código
 turnoJugador = TRUE # Jugador
@@ -37,7 +57,7 @@ while (TRUE){
   if (turnoJugador) {
     if (intentos <= 5){
       # Palabras generada por el jugador
-      palabraJugada <- tolower(readline(prompt = "[JUGADOR] Palabra Usada: ")) 
+      palabraJugada <- tolower(readline(prompt = "[JUGADOR] Palabra Usada: "))
       # Ver si la palabra dada es válida
       if (palabra_valida(diccionario, palabraJugada)){
         
@@ -45,21 +65,21 @@ while (TRUE){
         # Ver si coincide con la silaba primera pedida sino está mal
         if (grepl(ultima_silaba, sil[1])){
           ultima_silaba = sil[length(sil)]
-          palabras_usadas = append(palabras_usadas, palabraJugada)
           intentos = 0
           turnoJugador = FALSE
+          palabras_usadas <- append(palabras_usadas, palabraJugada)
         }else{
-          print(sprintf("La palabra empieza por una silaba incorrecta. Debe ser %s", ultima_silaba))
+          cat(sprintf("La palabra empieza por una silaba incorrecta. Debe ser %s\n", ultima_silaba))
           intentos = intentos + 1
         }
       }else{
-        print("La palabra usada no esta en el diccionario")
+        cat("La palabra usada no esta en el diccionario\n")
         intentos = intentos + 1
       }
     }else{
-      print("Has usado demasiados intentos para hallar la palabra.")
-      print("Game Over")
-      print(" :( :( :( :( :(")
+      cat("Has usado demasiados intentos para hallar la palabra.\n")
+      cat("Game Over\n")
+      cat(" :( :( :( :( :(\n")
       break
     }
   }else{
@@ -67,40 +87,43 @@ while (TRUE){
     palabras_posibles = filter(palabras_posibles,!is.element(palabras_posibles$palabra, palabras_usadas))
     
     if (nrow(palabras_posibles) == 0){
-      print("Tu palabra es ganadora")
-      print("You are the winner")
-      print(":) :) :) :)")
+      cat("Tu palabra es ganadora\n")
+      cat("You are the winner\n")
+      cat(":) :) :) :)\n")
       break
     }else{
+      # Se puede usar el ranking pero inverso para esto.
       # Obtiene las palabras ganadoras, es decir, aquellas cuya silaba final no sea silaba inicial.
       palabras_ganadoras = filter(palabras_posibles, !is.element(palabras_posibles$ultima, silabas))
-      if (nrow(palabras_ganadoras) == 0){
-        palabraJugada = palabras_posibles[1, ]
-      }else {
+      decision = runif(1) # Decide si la IA coge o no una palabra ganadora o no.
+      if (nrow(palabras_ganadoras) != 0 && decision <= prob_buena){
         palabraJugada = palabras_ganadoras[1, ]
+      }else {
+        palabraJugada = palabras_posibles[1, ]
       }
-      # print(palabraJugada)
-      palabras_usadas = append(palabras_usadas, palabraJugada$palabra)
+      # cat(palabraJugada)
       ultima_silaba = palabraJugada$ultima
-      print(sprintf("[MAQUINA] Palabra Usada: %s", palabraJugada$palabra))
+      cat(sprintf("[MAQUINA] Palabra Usada: %s\n", palabraJugada$palabra))
+      palabras_usadas <- append(palabras_usadas, palabraJugada$palabra)
       turnoJugador = TRUE
     }
   }
   
+  cat(sprintf("[JUEGO] Siguiente Silaba: %s\n", ultima_silaba))  
   if (ultima_silaba != "" && !is.element(ultima_silaba, silabas)){
+    cat("\n")
     if (turnoJugador){ # Turno Bot
-      print("La palabra de la maquina es ganadora")
-      print("You are the losser")
-      print(":( :( :( :(")
+      cat("La palabra de la maquina es ganadora\n")
+      cat("You are the losser\n")
+      cat(":( :( :( :(\n")
     }else{ # Jugador
-      print("Tu palabra es ganadora")
-      print("You are the winner")
-      print(":) :) :) :)")
+      cat("Tu palabra es ganadora\n")
+      cat("You are the winner\n")
+      cat(":) :) :) :)\n")
     }
     break
   }
-    print(sprintf("[NOTIFICACIÓN] Siguiente Silaba: %s", ultima_silaba))
 }
 
-print("[JUEGO] La Cadena Resultante del Juego es:")
-imprimir_cadena(palabras_usadas, max_per_row=3)
+cat("\n[JUEGO] La Cadena Resultante del Juego es:\n")
+imprimir_cadena(palabras_usadas, max_per_row=2)

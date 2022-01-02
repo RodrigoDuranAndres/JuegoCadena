@@ -8,8 +8,9 @@ imprimir_cadena <- function(cadena, max_per_row=3) {
     for (i in 1:n){
         row = sprintf("%s -> %s", row, cadena[i])
     
-        if ((i %% max_per_row) == 0){
-            print(row)
+        if ((i %% max_per_row) == 0 || i == n){
+            cat(row)
+            cat("\n")
             row = cadena[i]
         }
     }
