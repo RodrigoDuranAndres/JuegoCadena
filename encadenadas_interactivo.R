@@ -12,17 +12,6 @@ if(!interactive()){
     cat("\n[ERROR] the application should be run interactively\n")
     q()   
 }
-
-
-if (!require("sylly")) {install.packages('sylly')}
-if (!require("dplyr")) {install.packages('dplyr')}
-
-suppressMessages(library(dplyr))
-suppressMessages(library(sylly))
-
-if (!require("sylly.es")) {install.sylly.lang("es")}
-suppressMessages(library(sylly.es))
-
 source("./utils.R")
 load("./datos/diccionario_util.rda")
 
@@ -59,7 +48,7 @@ while (TRUE){
       # Palabras generada por el jugador
       palabraJugada <- tolower(readline(prompt = "[JUGADOR] Palabra Usada: "))
       # Ver si la palabra dada es válida
-      if (palabra_valida(diccionario, palabraJugada)){
+      if (es_palabra_valida(diccionario, palabraJugada)){
         
         sil = silaba(palabraJugada)
         # Ver si coincide con la silaba primera pedida sino está mal

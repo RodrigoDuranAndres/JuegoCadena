@@ -11,15 +11,19 @@
 load("./datos/diccionario_util.rda")
 source('./utils.R')
 
-set.seed(1234)
-
 silabas = names(unlist(table(diccionario$primera))) # Saca todas las silabas por las que empieza una palabra
 
-palabras_totales = nrow(diccionario)
-ultima_palabra = diccionario[sample(palabras_totales, 1), ] # devuelve una palabra aleatoria 
+
+# Palabra Inicial
+ultima_palabra = tolower(readline("[JUEGO] Dar una Palabra Inicial (+5 letras): "))
+while (!es_palabra_valida(diccionario, ultima_palabra)){
+    print("[JUEGO] La Palabra Dada no es Válida. Introduzca una nueva.\n Debe estar en el diccionario de la RAE y tener más o igual a 5 letras.\n")
+    ultima_palabra = tolower(readlines("[JUEGO] Dar una Palabra Inicial (+5 letras): "))
+}
+
+ultima_palabra = diccionario[diccionario$palabra == ultima_palabra, ] # devuelve una palabra aleatoria 
 
 palabras_usadas = c(ultima_palabra$palabra)
-
 
 #print(ultima_palabra$palabra)
 while (is.element(ultima_palabra$ultima, silabas)){
@@ -32,8 +36,7 @@ while (is.element(ultima_palabra$ultima, silabas)){
   
   palabras_usadas = append(palabras_usadas, ultima_palabra['palabra'])
   
-  cat(ultima_palabra$palabra)
 }
 
-cat("[JUEGO] La Cadena Resultante del Juego es:")
+cat("\n[JUEGO] La Cadena Resultante del Juego es:\n")
 imprimir_cadena(palabras_usadas, max_per_row=3)

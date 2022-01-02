@@ -28,7 +28,7 @@ Permite al Jugador jugar al juego de la cadena contra la máquina
 A partir de una palabra random, se busca la cadena de mayor longitud.
 
 ### 3. Encadena
-A partir de una palabra dada por el jugador, se obtiene una cadena de palabrasñ
+A partir de una palabra dada por el jugador, se obtiene una cadena de palabras
 
 ## Colaboradores
 Los autores de este projecto son:
