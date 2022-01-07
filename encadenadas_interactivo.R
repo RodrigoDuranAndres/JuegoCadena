@@ -13,7 +13,7 @@ if(!interactive()){
     q()   
 }
 source("./utils.R")
-load("./datos/diccionario_util.rda")
+load("./datos/diccionario.rda")
 
 
 # Configuración IA

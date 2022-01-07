@@ -8,7 +8,7 @@
 # --------------------------------------
 
 # Precarga de las librarias necesarias
-load("./datos/diccionario_util.rda")
+load("./datos/diccionario.rda")
 source('./utils.R')
 
 silabas = names(unlist(table(diccionario$primera))) # Saca todas las silabas por las que empieza una palabra

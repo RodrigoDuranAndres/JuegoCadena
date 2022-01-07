@@ -11,7 +11,7 @@
 source("./utils.R")
 
 # Precarga de las librarias necesarias
-load("./datos/diccionario_util.rda") # primera ultima palabra len con
+load("./datos/diccionario.rda") # primera ultima palabra len con
 
 # Función que permite averiguar si una silaba es ganadora
 es_silaba_ganadora <- function(silabas, primera_silaba){
