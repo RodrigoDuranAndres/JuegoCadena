@@ -1,5 +1,5 @@
 ---
-title: "Practica Grupo 2 (Palabras Encadenadas)"
+title: "Práctica Grupo 2 (Palabras Encadenadas)"
 output:
   pdf_document: default
   html_notebook: default
@@ -7,31 +7,35 @@ output:
 
 Autores: Ruben Cid, Pedro Ortiz, Rodrigo Duran, Guillermo Diaz Benito, Luis Nuñez
 
-El proyecto consiste en la resoluci'on y creacion del celebre juego *Las palabras encadenadas*.
-Dicho trabajo de realiza con la ayuda de la libreria *sylly*. 'esta nos ayuda a separar y procesar silabas 
-con el objetivo de crear el juego.
+El proyecto consiste en la resolución y creación del célebre juego *Las palabras encadenadas*.
+Dicho trabajo se realiza con la ayuda de la librería *sylly*. Esta nos ayuda a separar y procesar
+sílabas con el objetivo de crear el juego.
 
 El proyecto consta de diferentes partes o ejercicios:
 
 1. *encadena.R* que, dada una palabra, hace una encadenación de palabras.
 2. *encadenadas_interactivo.R* que juega con el usuario, permitiéndole meter palabras
 *válidas*, e intenta buscar palabras ganadoras.
-3. *supercadena.R*, elije palabras al azar del diccionario y calcula la longitud de la
+3. *supercadena.R*, elige palabras al azar del diccionario y calcula la longitud de la
 cadena más larga.
 
 
 ## Planteamiento
-
+Observamos las funciones que los 3 programas de la práctica tienen en común. Las escribimos en un
+fichero aparte y creamos un atajo para evitar así reescribir la llamada a las librerías necesarias.
+Aparte de ello, para que los programas sean más claros y no se muestren mensajes innecesarios de 
+las descargas de dichas librerías, suprimimos los mensajes que puedan aparecer
+(supressMessages(library(...))).
 
 ### encadena.R
-Dada una palabra aleatoria extraida de *diccionaro.Rda*, se encadena consecutivamente con otras
-palabras del mismo diccionaro creando una cadena que termina cuando la silaba de la **ultima** palabra
-se considera *ganadora*, es decir, si no existe palabra que comience con dicha silaba.
+Dada una palabra aleatoria extraída de *diccionaro.Rda*, se encadena consecutivamente con otras
+palabras del mismo diccionaro creando una cadena que termina cuando la sílaba de la **ultima** palabra
+se considera *ganadora*, es decir, si no existe palabra que comience con dicha sílaba.
 
 #### Primero
   Se carga el diccionario en formato .Rda
 ```{r}
-# Precarga de las librarias necesarias
+# Precarga de las librerías necesarias
 load("./datos/diccionario.rda")
 ```
 #### Segundo
@@ -45,9 +49,9 @@ ultima_palabra = diccionario[sample(palabras_totales, 1), ] # devuelve una palab
 palabras_usadas = c(ultima_palabra$palabra)
 ```
 #### Tercero
-  Se evalua con un bucle *While* la ultima silaba de la palabra entrante y se busca 
-  otra que comience con la misma gracias a variable *posibles palabras*. Ademas se sale 
-  del bucle si no existe palabra que no comience por la silaba.
+  Se evalúa con un bucle *While* la última sílaba de la palabra entrante y se busca 
+  otra que comience con la misma gracias a variable *posibles palabras*. Además, se sale 
+  del bucle si no existe palabra que comience por la sílaba.
 ```{r}
 while (is.element(ultima_palabra$ultima, silabas)){
 
@@ -63,11 +67,11 @@ while (is.element(ultima_palabra$ultima, silabas)){
 }
 ```
 ### encadenadas_interactivo.R
-Dada una palabra por el usuario se da comienzo al juego contra la maquina. Se jugara
-hasta que la maquina o el juegar no conozcan la siguiente palabra o fallen mas de 5 ocasiones.
+Dada una palabra por el usuario se da comienzo al juego contra la máquina. Se jugará
+hasta que la máquina o el juego no conozcan la siguiente palabra o fallen en más de 5 ocasiones.
 
 #### Primero
-  Se deben cargar tanto las librerias que vamos a utilizar como todas las funciones 
+  Se deben cargar tanto las librerías que vamos a utilizar como todas las funciones 
   y ficheros que se usaran, por ejemplo, todas las funciones de la carpeta *utils.R*
 ```{r}
 # Precarga de las librarias necesarias
@@ -84,7 +88,7 @@ source("./utils.R")
 load("./datos/diccionario.rda")
 ```
 #### Segundo
-  Ahora se declaran todas las varibles auxiliares que se van a usar en el bucle
+  Ahora se declaran todas las variables auxiliares que se van a usar en el bucle
   principal.
 ```{r}
 silabas = names(unlist(table(diccionario$primera)))
@@ -97,19 +101,58 @@ palabras_usadas = c()
 juega_acabado = FALSE
 ```
 #### Tercero
- Se implementa todo el bucle *While*, donde se muestra toda la dinamica del juego con 
+ Se implementa todo el bucle *While*, donde se muestra toda la dinámica del juego con 
  todas las excepciones y condiciones para que siga el juego.
 ```{r}
 plot(cars)
 ```
 ### supercadena.R
-Dada una palabra aleatoria, busca la cadena mas larga que pueda generar y 
+Dada una palabra aleatoria, busca la cadena más larga que pueda generar y 
 calcula su longitud.
-```{r}
-plot(cars)
-```
 
 ```{r}
 plot(cars)
 ```
 
+```{r}
+plot(cars)
+```
+#### Primero
+  Se carga el diccionario en formato .Rda
+```{r}
+# Precarga de las librerías necesarias
+source("./utils.R")
+
+load("./datos/diccionario.rda")
+```
+#### Segundo
+ Se declaran las variables que vamos a utilizar.
+```{r}
+silabas = names(unlist(table(diccionario$primera)))
+
+palabras_totales = nrow(diccionario)
+ultima_palabra = diccionario[sample(palabras_totales, 1), ] # devuelve una palabra aleatoria 
+
+palabras_usadas = c(ultima_palabra$palabra)
+```
+#### Tercero
+  Se evalúa con un bucle *While* la última sílaba de la palabra entrante y se busca otra que 
+  comience con la misma gracias a variable *posibles palabras*. En el caso de que no exista
+  en el diccionario alguna palabra que comience por la sílaba, se sale del bucle.
+  
+```{r}
+while (is.element(ultima_palabra$ultima, silabas)){
+
+  posibles_palabras = diccionario[which(diccionario$primera == ultima_palabra$ultima), ]
+  posibles_palabras = posibles_palabras[which(!(posibles_palabras$palabra %in% palabras_usadas)), ]
+  if(nrow(posibles_palabras) == 0){
+      break
+  }
+
+  #posibles = nrow(posibles_palabras)
+  
+  posibles_ranking = posibles_palabras[order(posibles_palabras$con), ]
+  ultima_palabra = posibles_ranking[nrow(posibles_ranking), ]
+  palabras_usadas = append(palabras_usadas, ultima_palabra$palabra)
+}
+```
