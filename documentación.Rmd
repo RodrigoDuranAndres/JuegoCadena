@@ -5,7 +5,7 @@ output:
   html_notebook: default
 ---
 
-Autores: Ruben Cid, Pedro Ortiz, Rodrigo Duran, Guillermo Diaz Benito, Luis Nuñez
+Autores: Ruben Cid, Pedro Ortiz, Rodrigo Durán Andrés, Guillermo Diaz Benito, Luis Nuñez
 
 El proyecto consiste en la resolución y creación del célebre juego *Las palabras encadenadas*.
 Dicho trabajo se realiza con la ayuda de la librería *sylly*. Esta nos ayuda a separar y procesar
